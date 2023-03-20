@@ -1,62 +1,36 @@
 class Solution {
     func searchRange(_ nums: [Int], _ target: Int) -> [Int] {
-        
-        let res = binarySearch(nums,target)
-        var low = -1
-        var high = 1
-        
-        
-        if res == -1 {
-            return [-1,-1]
-        } else {
-             while true {
-            if res+high <= nums.count-1 {
-                if nums[res+high] == target{
-                    high += 1
-                } else {
-                    break
-                }
-            } else {
-                break
-            }
-        }
-        while true {
-            if res+low >= 0 {
-                if nums[res+low] == target {
-                    low -= 1
-                } else {
-                    break
-                }
-            } else {
-                break
-            }
-        }
-
-        return [res+low+1,res+high-1]
-        }
-        
-       
-    }
-}
-
-func binarySearch(_ nums: [Int], _ target: Int) -> Int {
-    var low = 0
-    var high = nums.count - 1
-    var mid = 0
+    var left = 0
+    var right = nums.count - 1
     
-    while low <= high {
+    while left <= right {
+        let mid = (left + right) / 2
+        
+        if nums[mid] == target {
+            var start = mid
+            var end = mid
             
-            mid = low + (high-low)/2
-            if nums[mid] == target {
-                return mid
-            } 
-            
-            else if nums[mid] < target {
-                low = mid + 1
-            } else if nums[mid] >= target {
-                high = mid - 1
+            // Find the leftmost index of target
+            while start > 0 && nums[start - 1] == target {
+                start -= 1
             }
+            
+            // Find the rightmost index of target
+            while end < nums.count - 1 && nums[end + 1] == target {
+                end += 1
+            }
+            
+            return [start, end]
         }
-    return -1
+        
+        if nums[mid] < target {
+            left = mid + 1
+        } else {
+            right = mid - 1
+        }
+    }
+    
+    return [-1, -1]
+}
 }
 
