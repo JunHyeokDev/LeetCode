@@ -1,14 +1,6 @@
-/* Write your T-SQL query statement below */
 
 
--- select today.id
--- from Weather as yesterday
--- cross join Weather as today
-
--- where DateDiff(day,today.recordDate,yesterday.recordDate) = 1
--- and today.temperature > yesterday.temperature
-
-SELECT today.id
-FROM Weather AS yesterday
-JOIN Weather AS today ON DATEADD(day, 1, yesterday.recordDate) = today.recordDate
-WHERE today.temperature > yesterday.temperature;
+select w2.id
+from weather as w1
+join weather as w2 on datediff(day, w1.recordDate, w2.recordDate) = 1
+where w1.temperature < w2.temperature
